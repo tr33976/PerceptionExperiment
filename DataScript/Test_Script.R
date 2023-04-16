@@ -14,7 +14,7 @@ if(file.exists("test_data.csv")){
   testData$timeDay =  factor(testData$timeDay, levels=c("m", "d", "n"))
   testData$wait = as.numeric(testData$wait)
   testData$waitActual = as.numeric(testData$waitActual)
-  write.csv(testData, paste("backups/",Sys.time(),"test_data.csv",sep=""), row.names = FALSE)
+  write.csv(testData, paste("backups/",format(Sys.time(), '%Y-%m-%d%H%M%S'),"test_data.csv",sep = ""), row.names = FALSE)
 } else {
   dir.create("backups")
   columns = c("pid","stim","wait","waitActual", "timeDay", "indexdatetime") 
@@ -25,7 +25,7 @@ if(file.exists("test_data.csv")){
   testData$wait = as.numeric(testData$wait)
   testData$waitActual = as.numeric(testData$waitActual)
   write.csv(testData, "test_data.csv", row.names = FALSE)
-  write.csv(testData, paste("backups/",Sys.time(),"test_data.csv",sep = ""), row.names = FALSE)
+  write.csv(testData, paste("backups/",format(Sys.time(), '%Y-%m-%d%H%M%S'),"test_data.csv",sep = ""), row.names = FALSE)
 }
 
 
@@ -127,7 +127,7 @@ actualTime = as.numeric(end.timer - start.timer)
 rm(participantData)
 try(dev.off(dev.list()["RStudioGD"]), silent=TRUE)
 
-#overwrite the test file and create yet another backup, yes im paranoid lol
+#overwrite the test file
 testData[nrow(testData) + 1,] = c(participant, stim, as.numeric(waitTime), as.numeric(actualTime), tod, Sys.time())
 testData$wait = as.numeric(testData$wait)
 testData$waitActual = as.numeric(testData$waitActual)
