@@ -13,7 +13,7 @@ if(file.exists("test_data.csv")){
   testData$stim =  factor(testData$stim, levels=c("active", "control", "passive"))
   testData$wait = factor(testData$wait, levels=c(30, 90, 150))
   testData$waitActual = as.numeric(testData$waitActual)
-  write.csv(testData, paste("backups/",Sys.time(),"test_data.csv",sep=""), row.names = FALSE)
+  write.csv(testData, paste("backups/", format(Sys.time(), '%Y-%m-%d%H%M%S'),"test_data.csv",sep=""), row.names = FALSE)
 } else {
   dir.create("backups")
   columns = c("pid","stim","wait","waitActual", "indexdatetime") 
@@ -23,7 +23,7 @@ if(file.exists("test_data.csv")){
   testData$wait = factor(testData$wait, levels=c("30", "90", "150"))
   testData$waitActual = as.numeric(testData$waitActual)
   write.csv(testData, "test_data.csv", row.names = FALSE)
-  write.csv(testData, paste("backups/",Sys.time(),"test_data.csv",sep = ""), row.names = FALSE)
+  write.csv(testData, paste("backups/",format(Sys.time(), '%Y-%m-%d%H%M%S'),"test_data.csv",sep = ""), row.names = FALSE)
 }
 
 
