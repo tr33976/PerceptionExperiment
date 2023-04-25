@@ -3,6 +3,7 @@ rm(list=ls())
 library("rstudioapi")
 library(png)
 library(ggplot2)
+library(tictoc)
 setwd(dirname(getActiveDocumentContext()$path))
 clr = function(){cat("\014")}
 
@@ -71,14 +72,14 @@ switch(stim,
 rstudioapi::executeCommand('activateConsole')
 readline(prompt="Press [enter] to begin wait period")
 clr()
-start.timer <- Sys.time()
+tic(msg = NULL, quiet = TRUE)
 clr()
 rstudioapi::executeCommand('activateConsole')
 readline(prompt="Press [enter] to end wait period")
 clr()
-end.timer <- Sys.time()
+end.timer <- toc(log = FALSE, quiet = TRUE)
 clr()
-waitActual = as.numeric(end.timer - start.timer)
+waitActual = as.numeric(end.timer$toc - end.timer$tic)
 rm(participantData)
 try(dev.off(dev.list()["RStudioGD"]), silent=TRUE)
 
@@ -87,6 +88,6 @@ testData[nrow(testData) + 1,] = c(participant, stim, as.numeric(wait), as.numeri
 testData$waitActual = as.numeric(testData$waitActual)
 write.csv(testData, "test_data.csv", row.names = FALSE)
 
+rm(waitActual)
+rm(end.timer)
 cat("Complete, press source to run experiment again")
-
-
